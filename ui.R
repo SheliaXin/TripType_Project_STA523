@@ -5,8 +5,26 @@ plotSelect = c("Basket Size by Day Bargraph" = "bargraph1",
                "Department by Weekday Bargraph" = "bargraph2",
                "Department Relationship Chart" = "relationship")
 selectAll = c("Select All", "Select Specific Departments")
-d = read.csv("test.csv", header=TRUE)
-departments = as.character(unique(d$DepartmentDescription))[order(unique(d$DepartmentDescription))]
+#d = read.csv("test.csv", header=TRUE)
+#departments = as.character(unique(d$DepartmentDescription))[order(unique(d$DepartmentDescription))]
+departments = c("SHOES", "DAIRY", "GROCERY DRY GOODS", "DSD GROCERY", "BAKERY",
+      "IMPULSE MERCHANDISE", "PERSONAL CARE", "FABRICS AND CRAFTS",
+     "BOYS WEAR", "PRE PACKED DELI", "MENS WEAR", "CELEBRATION", "HOUSEHOLD CHEMICALS/SUPP",
+      "FROZEN FOODS", "PRODUCE", "HOME MANAGEMENT", "PHARMACY OTC", 
+      "CANDY, TOBACCO, COOKIES", "HOUSEHOLD PAPER GOODS", "SPORTING GOODS", 
+      "HARDWARE", "COMM BREAD", "HOME DECOR", "COOK AND DINE", "SERVICE DELI",
+      "PETS AND SUPPLIES", "MEAT - FRESH & FROZEN", "FINANCIAL SERVICES", 
+      "SEAFOOD", "WIRELESS", "MEDIA AND GAMING", "PAINT AND ACCESSORIES", 
+      "LADIESWEAR", "SLEEPWEAR/FOUNDATIONS", "BEAUTY", "BRAS & SHAPEWEAR",
+      "FURNITURE", "LAWN AND GARDEN", "AUTOMOTIVE", "BATH AND SHOWER",
+      "ELECTRONICS", "OFFICE SUPPLIES", "INFANT CONSUMABLE HARDLINES", 
+      "GIRLS WEAR, 4-6X  AND 7-14", "INFANT APPAREL", "LIQUOR,WINE,BEER", 
+      "NULL", "BOOKS AND MAGAZINES", "HORTICULTURE AND ACCESS", "JEWELRY AND SUNGLASSES",
+      "ACCESSORIES", "LADIES SOCKS", "BEDDING", "TOYS", "OPTICAL - FRAMES", 
+      "PHARMACY RX", "CAMERAS AND SUPPLIES", "MENSWEAR", "PLAYERS AND ELECTRONICS",
+      "PLUS AND MATERNITY", "SWIMWEAR/OUTERWEAR", "CONCEPT STORES", "SHEER HOSIERY",
+      "LARGE HOUSEHOLD GOODS", "OPTICAL - LENSES", "1-HR PHOTO", "OTHER DEPARTMENTS", "SEASONAL")
+departments = departments[order(departments)]
   
 
 shinyUI(fluidPage(

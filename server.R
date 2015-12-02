@@ -1,6 +1,6 @@
 library(shiny)
 library(ggplot2)
-library(plyr)
+#library(plyr)
 library(dplyr)
 library(reshape2)
 library(RColorBrewer)
@@ -21,10 +21,27 @@ shinyServer(function(input, output, session) {
     }
   )
 
+  table <- reactive(
+    {
+      if(input$dataset == 'training'){
+        read.csv("train.csv")
+      }else if(input$dataset == 'testing'){
+        read.csv("test.csv")
+      }else if(input$dataset == 'localfile'){
+        # input$file1 will be NULL initially. After the user selects and uploads a file, 
+        # it will be a data frame with 'name', 'size', 'type', and 'datapath' columns. 
+        # The 'datapath' column will contain the local filenames where the data can be found.
+        inFile <- input$file1
+        if (is.null(inFile))
+          return(NULL)
+        read.csv(inFile$datapath, header=input$header, sep=input$sep, quote=input$quote)
+      }
+    })
+  
   departments = reactive(
     {
       if(input$all_select == "Select All" & input$plotSelect == "bargraph2"){
-        as.character(unique(d$DepartmentDescription))[order(unique(d$DepartmentDescription))]
+        table()$DepartmentDescription
       }else
       {
         input$departments
@@ -33,22 +50,7 @@ shinyServer(function(input, output, session) {
     }
   )
   
-  table <- reactive(
-    {
-    if(input$dataset == 'training'){
-      read.csv("train.csv")
-    }else if(input$dataset == 'testing'){
-      read.csv("test.csv")
-    }else if(input$dataset == 'localfile'){
-      # input$file1 will be NULL initially. After the user selects and uploads a file, 
-      # it will be a data frame with 'name', 'size', 'type', and 'datapath' columns. 
-      # The 'datapath' column will contain the local filenames where the data can be found.
-      inFile <- input$file1
-      if (is.null(inFile))
-        return(NULL)
-      read.csv(inFile$datapath, header=input$header, sep=input$sep, quote=input$quote)
-    }
-  })
+  
   
   
   ### just for example ###
