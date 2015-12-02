@@ -93,7 +93,7 @@ shinyServer(function(input, output, session) {
       
       daily_sale_graph <- function(depart, dataset){
         sales <- dataset %>% 
-          filter(DepartmentDescription == depart) %>% 
+          filter(DepartmentDescription %in% depart) %>% 
           group_by(DepartmentDescription, Weekday) %>%
           summarise(Sales = n())
         names(sales) <- c("Department", "Date", "Sales")
