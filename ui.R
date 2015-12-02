@@ -1,13 +1,12 @@
 library(shiny)
 
 dataset = c("Training Set" ="training", "Test Set" ="testing", "Choose from local" = "localfile")
-plotSelect = c("Average Size of Trip Density Plot" = "density",
-                "Average Size of Trip Bargraph" = "bargraph1",
-                "Department by Weekday Bargraph" = "bargraph2",
-                "Department Relationship Chart" = "relationship")
-days_departments = c("Days" = "days", "Departments" = "dept")
+plotSelect = c("Basket Size by Day Bargraph" = "bargraph1",
+               "Department by Weekday Bargraph" = "bargraph2",
+               "Department Relationship Chart" = "relationship")
+selectAll = c("Select All", "Select Specific Departments")
 d = read.csv("test.csv", header=TRUE)
-departments = c("Select All", as.character(unique(d$DepartmentDescription)))
+departments = as.character(unique(d$DepartmentDescription))[order(unique(d$DepartmentDescription))]
   
 
 shinyUI(fluidPage(
@@ -37,15 +36,21 @@ shinyUI(fluidPage(
       ),
       conditionalPanel(
         condition = "input.plotSelect == 'bargraph1'",
-        selectInput("days_departments", h4("Days or Departments?"), days_departments)
+        sliderInput("min_size", h4("Minimum Basket Size"), 
+                    value = 1, step = 10,min = -30, max = 450),
+        sliderInput("max_size", h4("Maximum Basket Size"), 
+                    value = 1, step = 10,min = -30, max = 450)
+      ), 
+      conditionalPanel(
+        condition = "input.plotSelect == 'bargraph2' ",
+        selectInput("all_select", h4("All or Specific Departments?"), selectAll)
       ),
       conditionalPanel(
-        condition = "input.plotSelect == 'density'",
-        selectInput("days_departments", h4("Days or Departments?"), days_departments)
-      ),
-      conditionalPanel(
-        condition = "input.days_departments == 'dept'",
-        checkboxGroupInput("departments", h4("Departments: "), departments)
+        condition = "input.all_select == 'Select Specific Departments' &
+          input.plotSelect == 'bargraph2'",
+        actionButton("clear", label="Clear All"),
+        checkboxGroupInput("departments", h4("Departments:"), departments, 
+                           selected = "ACCESSORIES")
       )
       
     ),
