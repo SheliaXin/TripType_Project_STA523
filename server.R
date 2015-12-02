@@ -104,7 +104,7 @@ shinyServer(function(input, output, session) {
       }
       
       
-      all_department(train_data)
+      #all_department(train_data)
       ##pick departments
       depart <- departments()
       ##plot daily sale of departments above in test_data
