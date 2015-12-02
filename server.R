@@ -1,5 +1,9 @@
 library(shiny)
 library(ggplot2)
+library(plyr)
+library(dplyr)
+library(reshape2)
+library(RColorBrewer)
 # By default, the file size limit is 5MB. 
 # Here we'll raise limit to 40MB.
 options(shiny.maxRequestSize = 40*1024^2)
