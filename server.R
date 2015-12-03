@@ -21,7 +21,8 @@ shinyServer(function(input, output, session) {
       }
       if(input$clear1 > 0)
       {
-        updateCheckboxGroupInput(session, inputId = "departments", selected= "ACCESSORIES")
+        updateCheckboxGroupInput(session, inputId = "departments1", 
+                                 selected= c("ACCESSORIES", "AUTOMOTIVE"))
       }
       
     }
@@ -52,6 +53,12 @@ shinyServer(function(input, output, session) {
                input$plotSelect == 'relationship')
       {
         input$departments1
+        
+      }else if(input$all_select1 == 'Select All' &
+               input$plotSelect == 'relationship')
+      {
+        unique(table()$DepartmentDescription)[order(unique(table()$DepartmentDescription))]
+        
       }else
       {
         input$departments
@@ -67,11 +74,13 @@ shinyServer(function(input, output, session) {
         data1 = as.matrix(read.csv("relationshipMatrix_train.csv"))
         rownames(data1) = data1[, "X"]
         data1 = data1[, -1]
+        colnames(data1) = rownames(data1)
         data1
       }else if(input$dataset == 'testing'){
         data1 = as.matrix(read.csv("relationshipMatrix_test.csv"))
         rownames(data1) = data1[, "X"]
         data1 = data1[, -1]
+        colnames(data1) = rownames(data1)
         data1
       }
     }  
