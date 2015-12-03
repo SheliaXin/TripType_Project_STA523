@@ -1,6 +1,7 @@
 library(shiny)
 library(ggplot2)
 #library(plyr)
+library(RSQLite)
 library(dplyr)
 library(reshape2)
 library(RColorBrewer)
@@ -18,6 +19,11 @@ shinyServer(function(input, output, session) {
       {
         updateCheckboxGroupInput(session, inputId = "departments", selected= "ACCESSORIES")
       }
+      if(input$clear1 > 0)
+      {
+        updateCheckboxGroupInput(session, inputId = "departments", selected= "ACCESSORIES")
+      }
+      
     }
   )
 
@@ -42,12 +48,33 @@ shinyServer(function(input, output, session) {
     {
       if(input$all_select == "Select All" & input$plotSelect == "bargraph2"){
         table()$DepartmentDescription
+      }else if(input$all_select1 == 'Select Specific Departments' &
+               input$plotSelect == 'relationship')
+      {
+        input$departments1
       }else
       {
         input$departments
       }
       
     }
+  )
+  
+  bubble = reactive(
+    {
+      if(input$dataset == "training")
+      {
+        data1 = as.matrix(read.csv("relationshipMatrix_train.csv"))
+        rownames(data1) = data1[, "X"]
+        data1 = data1[, -1]
+        data1
+      }else if(input$dataset == 'testing'){
+        data1 = as.matrix(read.csv("relationshipMatrix_test.csv"))
+        rownames(data1) = data1[, "X"]
+        data1 = data1[, -1]
+        data1
+      }
+    }  
   )
   
   
@@ -117,6 +144,30 @@ shinyServer(function(input, output, session) {
       daily_sale_graph(depart, table())
       ##plot daily sale of "DAIRY" department in train_data
       #daily_sale_graph("DAIRY", train_data)
+    }else if(input$plotSelect == "relationship")
+    {
+      ### INPUT  ###
+      depart_select <- departments()
+      
+      longData <- melt(bubble()[depart_select,depart_select])
+      longData$value = as.numeric(longData$value)
+      
+      # Define palette
+      myPalette <- colorRampPalette(c("white", "dodgerblue", "dodgerblue1","dodgerblue2","dodgerblue3","dodgerblue4"),
+                                    space = "rgb")
+      zp1 <- ggplot(longData,
+                    aes(x = Var2, y = Var1, fill = value))
+      zp1 <- zp1 + geom_tile()
+      zp1 <- zp1 + scale_fill_gradientn(colours = myPalette(100))  #colours = myPalette(100)
+      zp1 <- zp1 + scale_x_discrete(expand = c(0, 0))
+      zp1 <- zp1 + scale_y_discrete(expand = c(0, 0))
+      zp1 <- zp1 + coord_equal()
+      zp1 <- zp1 + theme_bw() 
+      zp1 <- zp1 + theme(axis.text.x  = element_text(angle=90, vjust=0.5))
+      print(zp1)
+      
+      #Top20 <- head(longData[order(longData$value,decreasing = TRUE),],n=20)
+      #Top20
     }
     }
   )

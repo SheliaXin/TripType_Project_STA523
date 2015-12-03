@@ -69,8 +69,18 @@ shinyUI(fluidPage(
         actionButton("clear", label="Clear All"),
         checkboxGroupInput("departments", h4("Departments:"), departments, 
                            selected = "ACCESSORIES")
+      ),
+      conditionalPanel(
+        condition = "input.plotSelect == 'relationship' ",
+        selectInput("all_select1", h4("All or Specific Departments?"), selectAll)
+      ),
+      conditionalPanel(
+        condition = "input.all_select1 == 'Select Specific Departments' &
+        input.plotSelect == 'relationship'",
+        actionButton("clear1", label="Clear All"),
+        checkboxGroupInput("departments1", h4("Departments:"), departments, 
+                           selected = "ACCESSORIES")
       )
-      
     ),
     mainPanel(
       plotOutput('plot_1')
