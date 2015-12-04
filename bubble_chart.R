@@ -34,6 +34,15 @@ for(i in 1:length(depart)){
   Condf <- left_join(Condf,l[[i]], by = "VisitNumber")
 }
 
+##### Department matrix ######
+Dept_data <- Condf
+Dept_tem <- Condf[,-1]
+Dept_tem[!is.na(Connect)] = 1
+Dept_tem[is.na(Connect)] = 0
+Dept_data <- cbind(Condf[,1],Dept_tem)
+save(Dept_data,file="Dept_matrix.RData")
+########
+
 Connect <- Condf[,-1]
 Connect[!is.na(Connect)] = 1
 
@@ -56,6 +65,16 @@ diag(ConMatrix_1) <- 0
 
 
 
+######### DEBUG  ###########
+ConMatrix_1 <-as.matrix(read.csv("relationshipMatrix_train.csv"))
+rownames(ConMatrix_1) = ConMatrix_1[, "X"]
+ConMatrix_1 = ConMatrix_1[, -1]
+class(ConMatrix_1) <- "numeric" 
+colnames(ConMatrix_1) = rownames(ConMatrix_1)
+#############################
+
+
+
 # install package
 doInstall <- FALSE  # Change to FALSE if you don't want packages installed.
 toInstall <- c("ggplot2", "reshape2", "RColorBrewer")
@@ -67,7 +86,7 @@ library(plyr)
 
 
 ### INPUT  ###
-depart_select <- c(1,2,5,10,25,30,50)
+depart_select <- c(1,2,3,4)
 
 longData <- melt(ConMatrix_1[depart_select,depart_select])
 head(longData, 20)

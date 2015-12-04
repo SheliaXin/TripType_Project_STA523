@@ -74,12 +74,14 @@ shinyServer(function(input, output, session) {
         data1 = as.matrix(read.csv("relationshipMatrix_train.csv"))
         rownames(data1) = data1[, "X"]
         data1 = data1[, -1]
+        class(data1) <- "numeric"
         colnames(data1) = rownames(data1)
         data1
       }else if(input$dataset == 'testing'){
         data1 = as.matrix(read.csv("relationshipMatrix_test.csv"))
         rownames(data1) = data1[, "X"]
         data1 = data1[, -1]
+        class(data1) <- "numeric"
         colnames(data1) = rownames(data1)
         data1
       }
