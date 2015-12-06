@@ -18,7 +18,9 @@ Fineline = as.character(unique(data$FinelineNumber))[order(unique(data$FinelineN
 
 
 # group by visitnumber
-res_v = dbSendQuery(con,"SELECT VisitNumber, SUM(ScanCount) As NI, COUNT(*) AS n FROM train GROUP BY VisitNumber") 
+res_v = dbSendQuery(con,"SELECT VisitNumber, 
+                    SUM(CASE WHEN ScanCount > 0 THEN 1 ELSE 0 END) AS nBuy,
+                    SUM(CASE WHEN ScanCount < 0 THEN 1 ELSE 0 END) AS nReturn FROM train GROUP BY VisitNumber") 
 number_v <- dbFetch(res_v, n=-1)
 visitnumber <- number_v$VisitNumber
 
@@ -35,9 +37,19 @@ for(i in 1:length(depart)){
   Condf <- left_join(Condf,l[[i]], by = "VisitNumber")
 }
 
+
+##### Department matrix ######
+Dept_data <- Condf
+Dept_tem <- Condf[,-1]
+Dept_tem[!is.na(Connect)] = 1
+Dept_tem[is.na(Connect)] = 0
+Dept_data <- cbind(number_v[,1:2],Dept_tem)  # triptype, visiternumber, de
+#save(Dept_data,file="Dept_matrix.RData")
+########
+
 # connection data frame without visitnumber
-Connect <- Condf[,-1]
-Connect[!is.na(Connect)] = 1
+#Connect <- Condf[,-1]
+#Connect[!is.na(Connect)] = 1
 
 # Fineline
 Finedf <- data.frame(VisitNumber = visitnumber)
@@ -50,36 +62,22 @@ for(i in 1:length(Fineline)){
   print(i)
 }
 
-# Fineline matrix
+
+
+## Fineline matrix
+
 Fine_m <- Finedf[,-1]
 Fine_m[!is.na(Fine_m)] = 1
 Fine_m[is.na(Fine_m)] = 0
+#save(Fine_m,file="FinelineNumber.RData")
+#load("FinelineNumber.RData")
 
-save(Fine_m,file="Fine_m.RData")
-write.csv(Fine_m, file = "FinelineNumber.csv")
-
-# initial connection matrix
-n = length(depart)
-ConMatrix <- matrix(0, n, n)
-colnames(ConMatrix) <- depart
-rownames(ConMatrix) <- depart
-
-# construct connection matrix
-for(i in 1:nrow(Connect)){
-  dept.buy <- which(Connect[i,] == 1)
-  for(j in 1:length(dept.buy)){
-    for(k in 1:j){
-      ConMatrix[dept.buy[k],dept.buy[j]] <- ConMatrix[dept.buy[k],dept.buy[j]] + 1
-    }
-  }
-}
-
-ConMatrix_1 <- t(ConMatrix)
-diag(ConMatrix_1) <- 0
-
-write.csv(ConMatrix_1,file = "ConMatrix_train.csv")
-
-
+## new data
+newData <- cbind(Dept_data,Fine_m)
+newData <- right_join(data[,c("VisitNumber","Weekday")], newData,
+                     by = "VisitNumber")
+newData <- right_join(number_v, newData, by = "VisitNumber")
+save(newData, file = "newData_train.RData")
 
 dbClearResult(res)
 dbClearResult(res_d)
