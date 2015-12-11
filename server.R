@@ -221,7 +221,7 @@ shinyServer(function(input, output, session) {
       
       
       # proportion of basket per day, which changes based on min and max
-      percent = mutate(joined, prop = big/sum(big))
+      percent = mutate(joined, prop = big/sum(big), proptotal = total/sum(total))
       
       # arrange weekdays in order
       percent = arrange(percent, Weekday)
@@ -229,10 +229,17 @@ shinyServer(function(input, output, session) {
                        percent[5,], percent[1,], percent[3,], percent[4,])
       
       # plot proportion
-      barplot(arranged$prop, names.arg = c("Mon", "Tues", "Wed",
-                                           "Thurs", "Fri", "Sat", "Sun"),
-              ylab = "Proportion of All Trips with Specified Basket Size", xlab = "Weekday",
-              main = "Basket Size per Day of Week") 
+      
+      barplot(t(as.matrix(arranged[c("proptotal", "prop")])), beside = TRUE, 
+              names.arg = c("Mon", "Tues", "Wed",
+                            "Thurs", "Fri", "Sat", "Sun"), 
+              ylab = "Proportion of Trips", xlab = "Weekday",
+              main = "Basket Size per Day of Week",
+              col = c("lightblue1", "navyblue"))
+      
+      legend("topleft", legend = c("All Baskets", "Baskets within Size"), 
+            col = c("lightblue1", "navyblue"), pch = c(15,15))
+      
       
     
     }
