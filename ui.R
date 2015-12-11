@@ -82,7 +82,7 @@ shinyUI(fluidPage(
       )
     ),
     mainPanel(
-      plotOutput('plot1')
+      plotOutput('plot_1')
     )
   )
 ))
