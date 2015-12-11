@@ -226,7 +226,11 @@ shinyServer(function(input, output, session) {
       
       # plot proportion, which can change 
       barplot(arranged$prop, names.arg = c("Mon", "Tues", "Wed",
-                                           "Thurs", "Fri", "Sat", "Sun")) 
+                                           "Thurs", "Fri", "Sat", "Sun"),
+              ylab = "Proportion of Trips with Specified Basket Size", xlab = "Weekday",
+              main = "Basket Size per Day of Week") 
+      
+    
     }
       
     
