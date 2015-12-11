@@ -47,9 +47,15 @@ On this plot, the user can select the different desired departments. This plot s
 
 ##Cleaning and Organzing Data
 
-The data was cleaned and organized in order to use it better for a classification algorithm. The columns for each visit number are now: VisitNumer, number of purchases, number of returns, weekday, the departments for the trip, and fine line numbers for the trip, which is a more descreptive categorizing number for each item. 
+The data was cleaned and organized in order to use it better for a classification algorithm. The data for each visit number is now: 
+
+1. visit number
+2. number of purchases
+3. number of returns
+4. weekday
+5. indicators for the specific departments for the trip
+6. indicators for the fine line numbers for the trip, which is a more descriptive categorizing number than the department for each item
 
 ##Classification and Prediction 
 
-Principal Component Analysis on different departments
 
