@@ -1,5 +1,6 @@
 # setwd("/Users/sheliaxin/Documents/Duke/Courses/STA523/Final Proj/Final_Project_STA523")
 data = read.csv("train.csv")
+library(dplyr)
 
 ## use sql
 library(RSQLite)
@@ -18,17 +19,17 @@ Fineline = as.character(unique(data$FinelineNumber))[order(unique(data$FinelineN
 
 
 # group by visitnumber
-res_v = dbSendQuery(con,"SELECT VisitNumber, 
+res_v = dbSendQuery(con,"SELECT TripType, VisitNumber, 
                     SUM(CASE WHEN ScanCount > 0 THEN 1 ELSE 0 END) AS nBuy,
                     SUM(CASE WHEN ScanCount < 0 THEN 1 ELSE 0 END) AS nReturn FROM train GROUP BY VisitNumber") 
 number_v <- dbFetch(res_v, n=-1)
 visitnumber <- number_v$VisitNumber
 
+
+##### Department matrix ###### 
+
 # initial connection data frame
 Condf <- data.frame(VisitNumber = visitnumber)
-
-# construct connection data frame 
-library(dplyr)
 l <- list()
 for(i in 1:length(depart)){
   sql_query <- paste0("SELECT VisitNumber, DepartmentDescription AS '",depart[i],"' FROM train WHERE DepartmentDescription = '", depart[i], "' GROUP BY VisitNumber")
@@ -37,21 +38,14 @@ for(i in 1:length(depart)){
   Condf <- left_join(Condf,l[[i]], by = "VisitNumber")
 }
 
-
-##### Department matrix ######
-Dept_data <- Condf
-Dept_tem <- Condf[,-1]
-Dept_tem[!is.na(Connect)] = 1
-Dept_tem[is.na(Connect)] = 0
-Dept_data <- cbind(number_v[,1:2],Dept_tem)  # triptype, visiternumber, de
+Dept_m <- Condf[,-1]
+Dept_m[!is.na(Dept_m)] = 1
+Dept_m[is.na(Dept_m)] = 0
 #save(Dept_data,file="Dept_matrix.RData")
-########
+Dept_m <- cbind(VisitNumber = Condf$VisitNumber,Dept_m)  #  visiternumber, department
 
-# connection data frame without visitnumber
-#Connect <- Condf[,-1]
-#Connect[!is.na(Connect)] = 1
 
-# Fineline
+##### Fineline matrix #####
 Finedf <- data.frame(VisitNumber = visitnumber)
 l <- list()
 for(i in 1:length(Fineline)){
@@ -62,10 +56,6 @@ for(i in 1:length(Fineline)){
   print(i)
 }
 
-
-
-## Fineline matrix
-
 Fine_m <- Finedf[,-1]
 Fine_m[!is.na(Fine_m)] = 1
 Fine_m[is.na(Fine_m)] = 0
@@ -73,11 +63,15 @@ Fine_m[is.na(Fine_m)] = 0
 #load("FinelineNumber.RData")
 
 ## new data
-newData <- cbind(Dept_data,Fine_m)
-newData <- right_join(data[,c("VisitNumber","Weekday")], newData,
-                     by = "VisitNumber")
+newData <- cbind(Dept_m, Fine_m)
+# newData <- right_join(data[,c("VisitNumber","Weekday")], newData,
+#                     by = "VisitNumber")
+newData_without_F <- right_join(number_v, Dept_m, by = "VisitNumber")
 newData <- right_join(number_v, newData, by = "VisitNumber")
+save(newData_without_F, file = "newData_train_without_F.RData")
 save(newData, file = "newData_train.RData")
+load( "newData_train.RData")
+
 
 dbClearResult(res)
 dbClearResult(res_d)
