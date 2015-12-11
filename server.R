@@ -195,9 +195,11 @@ shinyServer(function(input, output, session) {
     {
       test = table()
       
+      # count number of items per trip
       visit_grouped = group_by(test, VisitNumber)
       size_trip = summarise(visit_grouped, n_items = sum(ScanCount))
       
+      # join size of trip with weekday
       weekday = test[,c("VisitNumber", "Weekday")] %>%
         unique()
       weekday_joined = left_join(x = size_trip, y = weekday, 
@@ -212,22 +214,24 @@ shinyServer(function(input, output, session) {
       grouped = group_by(weekday_joined, Weekday)
       grouped_big = group_by(big_baskets, Weekday)
       
+      # count number in total and big basket 
       total_df = summarise(grouped, total = n())
       big_df = summarise(grouped_big, big = n())
       joined = left_join(total_df, big_df, by = "Weekday")
       
       
-      #proportion of basket size, which changes based on min and max
-      percent = mutate(joined, prop = big/total)
+      # proportion of basket per day, which changes based on min and max
+      percent = mutate(joined, prop = big/sum(big))
       
+      # arrange weekdays in order
       percent = arrange(percent, Weekday)
       arranged = rbind(percent[2,], percent[6,], percent[7,],
                        percent[5,], percent[1,], percent[3,], percent[4,])
       
-      # plot proportion, which can change 
+      # plot proportion
       barplot(arranged$prop, names.arg = c("Mon", "Tues", "Wed",
                                            "Thurs", "Fri", "Sat", "Sun"),
-              ylab = "Proportion of Trips with Specified Basket Size", xlab = "Weekday",
+              ylab = "Proportion of All Trips with Specified Basket Size", xlab = "Weekday",
               main = "Basket Size per Day of Week") 
       
     
