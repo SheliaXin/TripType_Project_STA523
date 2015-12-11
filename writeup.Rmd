@@ -26,7 +26,7 @@ Using the columns in the Test data, we need to come up with categorising/cluster
 
 ##Data Visualilzation and Shiny App
 
-First, we looked at different ways to visualize the datasets. The Shiny App found in ui.R and server.R contains three different plots where various inputs can be changed, and the plots will automatically change. In all three plots, the dataset can either be chosen as the training set or the testing set. The step that takes the longest to load in the App is selecting one of these two datasets because they have almost 700,000 rows each. Descriptions of the three different plots are as follows:
+First, we looked at different ways to visualize the datasets. The Shiny App contains three different plots where various inputs can be changed, and the plots will automatically change. The Shiny App can be found online on RStudio's hosting service for Shiny apps here: [Shiny App] (https://snormoyle.shinyapps.io/Final_Project_STA523). In all three plots, the dataset can either be chosen as the training set or the testing set. The step that takes the longest to load in the App is selecting one of these two datasets because they have almost 700,000 rows each. Descriptions of the three different plots are as follows:
 
 
 1. Basket Size by Day Bargraph: 
