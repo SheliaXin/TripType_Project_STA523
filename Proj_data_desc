@@ -1,0 +1,9 @@
+The data has transactional data for customers shopping at Walmart. 
+
+The data consists of 7 columns: TripType, VisitNumber, Weekday, Upc, ScanCount, DepartmentDescription, and FinelineNumber. The TripType is an id that represents the type of trip the customer made. This is the variable we are going to be predicting. The VisitNumber is an id depicting a trip made by a customer. Weekday is the weekday of the trip. UPC which is the Unique Product Code is the unique code associated with the product. ScanCount is the quantity of that particular item bought. A negative value here means the item was returned. DepartmentDescription is a broad description of the item's department. FinelineNumber is a more refined category for each of the products, created by Walmart.
+
+Each shopping trip is categorised based on the items purchased in each trip. For example: a trip may be small daily dinner trip, a weekly large grocery trip, or a holiday trip.
+
+There's two sets of data: the training set and the test set. The training set contains the trips with the TripType included. There are a total of 38 distinct trip types that Walmart has come up with. And the data has 65,535 rows.
+
+Using the columns in the Test data, we need to come up with categorising/clustering the test data into trip types. And finally predict a TripType for each of the customer trips in the test data.

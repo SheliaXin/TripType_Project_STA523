@@ -32,6 +32,11 @@ all_department <- function(dataset){
     group_by(Weekday) %>%
     summarise(Sales = n())
   names(sales) <- c("Date", "Sales")
+  #change the order of day
+  sales <- within(sales,
+                  Date <- factor(Date,
+                                 levels = c("Sunday", "Monday", 
+                                            "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")))
   plot <- ggplot(sales, aes(x = Date, y = Sales)) + 
     geom_bar(stat = "identity")+
     labs(x = "", y = "")
@@ -53,12 +58,16 @@ daily_sale_graph <- function(depart, dataset){
     group_by(DepartmentDescription, Weekday) %>%
     summarise(Sales = n())
   names(sales) <- c("Department", "Date", "Sales")
+  #change the order of day
+  sales <- within(sales,
+                  Date <- factor(Date,
+                                 levels = c("Sunday", "Monday", 
+                                            "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")))
   plot <- ggplot(sales, aes(x = Date, y = Sales, fill = factor(Department))) + 
     geom_bar(stat = "identity")+
     labs(x = "", y = "", fill = "Department")
   return(plot)
 }
-
 
 all_department(train_data)
 ##pick departments
