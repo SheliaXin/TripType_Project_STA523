@@ -1,9 +1,11 @@
 library(e1071)
 load("newData_train_without_F.RData")
+load("newData_test_without_F.RData")
 # triptype <- unique(Dept_data[,"TripType"])
 
-data <- as.matrix(newData_without_F[1:1000,])
-class(data) <- "numeric"
+#data <- as.matrix(newData_without_F[1:1000,])
+data <- newData_without_F
+#class(data) <- "numeric"
 inputData <- data.frame(data[, -c(1:2)], response = as.factor(data[,"TripType"])) # response as factor
 
 # linear SVM
@@ -13,6 +15,36 @@ print(svmfit)
 plot(svmfit, inputData)
 compareTable <- table(inputData$response, predict(svmfit))  # tabulate
 mean(inputData$response != predict(svmfit)) # 19.44% misclassification error
+
+# Since one department shows up only in train set but not in test set, 
+# we add the column and set the number in test set as 0
+outputData <- data.frame(testData_without_F[, -1])
+latentDept <- which(names(inputData) %in% names(outputData) == FALSE)
+latentDept <- latentDept[-length(latentDept)]
+outputData <- cbind(outputData[,1:(latentDept-1)],0,outputData[,latentDept:ncol(outputData)])
+names(outputData)[latentDept] <- names(inputData)[latentDept]
+
+pred <- predict(svmfit,outputData)
+
+output <- cbind(testData_without_F[, 1], pred)
+TripType <- as.character(unique(data[,"TripType"]))[order(unique(data[,"TripType"]))]
+
+
+# initial submission
+submission <- matrix(0, nrow = nrow(output) , ncol = length(TripType))
+submission <- cbind(output[,1], submission)
+colnames(submission) <- rep(NA, length(TripType)+1)
+colnames(submission)[1] <- "VisitNumber"
+for(i in 1:length(TripType)){
+  colnames(submission)[i+1] <- paste0("TripType_",TripType[i])
+}
+
+for(i in 1:nrow(output)){
+  submission[i, which(TripType==output[i,2])+1] <- 1
+}
+write.csv(submission, file = "submission.csv")
+
+
 
 
 # radial SVM
