@@ -9,7 +9,7 @@ Final Project Write-Up
 
 ##Introduction
 
-The data set and problem set up for this project is provided by [https://www.kaggle.com/c/walmart-recruiting-trip-type-classification] (kaggle.com). From this website, "Walmart uses both art and science to continually make progress on their core mission of better understanding and serving their customers. One way Walmart is able to improve customers' shopping experiences is by segmenting their store visits into different trip types." A motivation for the statistical analysis in this project is to provide a company like Walmart with interesting information  and insights regarding their customers. The kaggle competition includes a training and a testing set where the goal is to classify different types of shopping trips in the testing set with information provided in the training set. 
+The data set and problem set up for this project is provided by (https://www.kaggle.com/c/walmart-recruiting-trip-type-classification) [kaggle.com]. From this website, "Walmart uses both art and science to continually make progress on their core mission of better understanding and serving their customers. One way Walmart is able to improve customers' shopping experiences is by segmenting their store visits into different trip types." A motivation for the statistical analysis in this project is to provide a company like Walmart with interesting information  and insights regarding their customers. The kaggle competition includes a training and a testing set where the goal is to classify different types of shopping trips in the testing set with information provided in the training set. 
 
 ##Data 
 
@@ -26,14 +26,14 @@ Using the columns in the Test data, we need to come up with categorising/cluster
 
 ##Data Visualilzation and Shiny App
 
-First, we looked at different ways to visualize the datasets. The Shiny App contains three different plots where various inputs can be changed, and the plots will automatically change. In all three plots, the dataset can either be chosen as the training set or the testing set. The step that takes the longest to load in the App is selecting one of these two datasets because they have almost 700,000 rows each. Descriptions of the three different plots are as follows:
+First, we looked at different ways to visualize the datasets. The Shiny App found in ui.R and server.R contains three different plots where various inputs can be changed, and the plots will automatically change. In all three plots, the dataset can either be chosen as the training set or the testing set. The step that takes the longest to load in the App is selecting one of these two datasets because they have almost 700,000 rows each. Descriptions of the three different plots are as follows:
 
 
 1. Basket Size by Day Bargraph: 
 
 For this plot, the user can select a minimum basket size and a maximum basket size. This plot was intended to be able to look to see during which days of the week people shop most often and also to see if this changes for different types of shopping trips. We hypothesize that people in general shop more often on the weekdays, and in addition, people shop more often for big baskets on the weekends.  
 
-This bargraph shows the proportion of the all trips on that day next to the proportion with that specified basket size that occured on that day. You can see how the propotion with the specified basket changes compared to the total proportion. Is it seen that overall, most people shop on weekdays, and in addition, a greater proportion shops for big baskets on weekends. 
+This bargraph shows the proportion of the all trips on that day next to the proportion with that specified basket size that occured on that day. You can see how the propotion with the specified basket changes compared to the total proportion. Is it seen that overall, most people shop on weekdays, and in addition, a greater proportion shops for big baskets on weekends. Negative items or baskets sizes are returns. 
 
 
 2. Department by Weekday Bargraph: 
@@ -45,13 +45,11 @@ For this plot, the user can either select all the departemtn or can select the d
 On this plot, the user can select the different desired departments. This plot shows the relationship between the departments and how often people buy items in those departments at the same time. On the x and y axis are the selected departments creating a matrix between all the selected departments. The shaded sqaures within this matrix show the relationship between them. The darker the shade of blue, the more related those departments are and the more often customers buy products from those different departments. 
 
 
-
-
 ##Cleaning and Organzing Data
 
-The data was cleaned and organized in order to use it better for a classification algorithm. 
+The data was cleaned and organized in order to use it better for a classification algorithm. The columns for each visit number are now: VisitNumer, number of purchases, number of returns, weekday, the departments for the trip, and fine line numbers for the trip, which is a more descreptive categorizing number for each item. 
 
 ##Classification and Prediction 
 
-PCA on different deparments
+Principal Component Analysis on different departments
 
