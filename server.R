@@ -132,6 +132,11 @@ shinyServer(function(input, output, session) {
           group_by(Weekday) %>%
           summarise(Sales = n())
         names(sales) <- c("Date", "Sales")
+        #change the order of day
+        sales <- within(sales,
+                        Date <- factor(Date,
+                                       levels = c("Sunday", "Monday", 
+                                                  "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")))
         plot <- ggplot(sales, aes(x = Date, y = Sales)) + 
           geom_bar(stat = "identity")+
           labs(x = "", y = "")
