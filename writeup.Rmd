@@ -9,7 +9,7 @@ Final Project Write-Up
 
 ##Introduction
 
-The data set and problem set up for this project is provided by (https://www.kaggle.com/c/walmart-recruiting-trip-type-classification) [kaggle.com]. From this website, "Walmart uses both art and science to continually make progress on their core mission of better understanding and serving their customers. One way Walmart is able to improve customers' shopping experiences is by segmenting their store visits into different trip types." A motivation for the statistical analysis in this project is to provide a company like Walmart with interesting information  and insights regarding their customers. The kaggle competition includes a training and a testing set where the goal is to classify different types of shopping trips in the testing set with information provided in the training set. 
+The data set and problem set up for this project is provided by [kaggle.com] (https://www.kaggle.com/c/walmart-recruiting-trip-type-classification) . From this website, "Walmart uses both art and science to continually make progress on their core mission of better understanding and serving their customers. One way Walmart is able to improve customers' shopping experiences is by segmenting their store visits into different trip types." A motivation for the statistical analysis in this project is to provide a company like Walmart with interesting information  and insights regarding their customers. The kaggle competition includes a training and a testing set where the goal is to classify different types of shopping trips in the testing set with information provided in the training set. 
 
 ##Data 
 
