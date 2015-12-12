@@ -29,7 +29,7 @@ Using the columns in the Test data, we need to come up with categorising/cluster
 
 ##Data Visualilzation and Shiny App
 
-First, we looked at different ways to visualize the datasets. The Shiny App contains three different plots where various inputs can be changed, and the plots will automatically change. The Shiny App can be found online on RStudio's hosting service for Shiny apps here: [Shiny App] (https://snormoyle.shinyapps.io/Final_Project_STA523). In all three plots, the dataset can either be chosen as the training set or the testing set. The step that takes the longest to load in the App is selecting one of these two datasets because they have almost 700,000 rows each. Descriptions of the three different plots are as follows:
+First, we looked at different ways to visualize the datasets. The Shiny App contains three different plots where various inputs can be changed, and the plots will automatically change. The Shiny App can be found online on RStudio's hosting service for Shiny apps here: [Shiny App] (https://snormoyle.shinyapps.io/Final_Project_STA523). In all three plots, the dataset can be chosen as the training set, the testing set or uploading file. The step that takes the longest to load in the App is selecting one of these two datasets(training/testing set) because they have almost 700,000 rows each. Descriptions of the three different plots are as follows:
 
 
 1. Basket Size by Day Bargraph: 
@@ -61,20 +61,23 @@ Since in our original train/test set each row represents a product bought by som
 
 ##Classification and Prediction 
 
-To classify the visit number, we try SVM algorithm, 
+To classify the visit number, we used SVM algorithm.
 
-### Support Vector Machine Algorithm 
+### Support Vector Machine Models
 
 Support Vector Machine(SVM) is an algorithm used for classification and regression analysis. It construct a linear boundary in a large, transformed version of the feature space to produce nolinear boundaries for classification[1].
 
-First, we use Cross Validation to set our parameter `cost`, `gamma` in SVM model. We sample $80\%$ data(in train set) to train and the left $20\%$ to test. With testing gamma from 1e-6 to 1e-1, cost from 10 to 100, we then select the best choice (gamma = , cost = ) as our parameter.
+We build up two SVM models using both "linear" kernel and "radial" kernel, and set the cost=10. The misclassification error in "linear" kernel model is 34.81\%. With using "linear" kernel and the misclassification error is 33.87\%. 
 
-Second, we build up our SVM models using train set. With using "linear" kernel and the misclassification error is . With using "linear" kernel and the misclassification error is . 
-
-Third, we use both the two SVM models above to predict the trip type in test set and upload our result to Kaggle. The model with "linear" kernel gets point and the model with "radial" kernel gets point.
+Third, we use our SVM models to predict the trip type in test set and upload our result to Kaggle. The model with "radial" kernel gets better performance than the "linear" kernel model.
 
 ## Inprovement and discussion
 
+To improve our Support Vector Machine Models, we could use tuning to set our parameter `cost`, `gamma` in SVM model. 
 
+## Reference
+[1] Support Vector Machine. (n.d.). In The elements of statistical learning: Data mining, inference, and prediction (Second ed.). (p. 417).
+
+[2] Support Vector Machines. (n.d.). Retrieved December 12, 2015, from http://rstatistics.net/support-vector-machines/ 
 
 
