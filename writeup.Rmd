@@ -7,6 +7,7 @@ Final Project Write-Up
 ###Team Members' Names: 
 ###Sarah Normoyle, Gonzalo Bustos, Xin Xu, Arpita Mandan, Drew Jorda, Yuan Gao
 
+
 ##Introduction
 
 The data set and problem set up for this project is provided by [kaggle.com] (https://www.kaggle.com/c/walmart-recruiting-trip-type-classification) . From this website, "Walmart uses both art and science to continually make progress on their core mission of better understanding and serving their customers. One way Walmart is able to improve customers' shopping experiences is by segmenting their store visits into different trip types." A motivation for the statistical analysis in this project is to provide a company like Walmart with interesting information  and insights regarding their customers. The kaggle competition includes a training and a testing set where the goal is to classify different types of shopping trips in the testing set with information provided in the training set. 
@@ -49,7 +50,7 @@ On this plot, the user can select the different desired departments. This plot s
 
 ##Cleaning and Organzing Data
 
-The data was cleaned and organized in order to use it better for a classification algorithm. The data for each visit number is now: 
+Since in our original train/test set each row represents a product bought by someone, each visit number may correspond to several rows. To classify the visit number, we cleaned and reorganized the data. The data for each visit number is now: 
 
 1. visit number
 2. number of purchases
@@ -59,5 +60,21 @@ The data was cleaned and organized in order to use it better for a classificatio
 6. indicators for the fine line numbers for the trip, which is a more descriptive categorizing number than the department for each item
 
 ##Classification and Prediction 
+
+To classify the visit number, we try SVM algorithm, 
+
+### Support Vector Machine Algorithm 
+
+Support Vector Machine(SVM) is an algorithm used for classification and regression analysis. It construct a linear boundary in a large, transformed version of the feature space to produce nolinear boundaries for classification[1].
+
+First, we use Cross Validation to set our parameter `cost`, `gamma` in SVM model. We sample $80\%$ data(in train set) to train and the left $20\%$ to test. With testing gamma from 1e-6 to 1e-1, cost from 10 to 100, we then select the best choice (gamma = , cost = ) as our parameter.
+
+Second, we build up our SVM models using train set. With using "linear" kernel and the misclassification error is . With using "linear" kernel and the misclassification error is . 
+
+Third, we use both the two SVM models above to predict the trip type in test set and upload our result to Kaggle. The model with "linear" kernel gets point and the model with "radial" kernel gets point.
+
+## Inprovement and discussion
+
+
 
 
