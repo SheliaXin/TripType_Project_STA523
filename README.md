@@ -1,4 +1,7 @@
 # Final_Project_STA523
+###Team Members' Names:
+####Sarah Normoyle, Gonzalo Bustos, Xin Xu, Arpita Mandan, Drew Jorda, Yuan Gao
+
 
 Write-up for the project can be found in writeup.Rmd. The Shiny App can be found in ui.R and server.R, but the link to the more user friendly deployed Shiny App can also be found in the write-up.
 
