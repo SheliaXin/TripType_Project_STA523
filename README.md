@@ -4,4 +4,4 @@ Write-up for the project can be found in writeup.Rmd. The link to the Shiny App 
 
 The submisson sent to kaggle.com can be found in the two .csv files.
 
-If want to re-run the code for the analysis part of the project, it can be re-run with the Makefile. 
+If you want to re-run the code for the analysis part of the project, it can be re-run with the Makefile. 
