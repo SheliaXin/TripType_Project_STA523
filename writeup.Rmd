@@ -61,7 +61,7 @@ Since in our original train/test set each row represents a product bought by som
 
 ##Classification and Prediction 
 
-To classify the trips and the visit numbers, we used SVM algorithm.
+To classify the trips and the visit numbers, we used the SVM algorithm.
 
 ### Support Vector Machine Models
 
@@ -71,11 +71,13 @@ We build up two SVM models using both "linear" kernel and "radial" kernel, and s
 
 Third, we use our SVM models to predict the trip type in test set and upload our result to Kaggle. The model with "radial" kernel gets better performance than the "linear" kernel model.
 
+The submissions to kaggle can be found in submssion.csv and submission_r.csv. 
+
 ## Inprovement and discussion
 
-To improve our Support Vector Machine Models, we could use tuning to set our parameter `cost`, `gamma` in SVM model. We could also try to incorporate the FineLineNumber into our model. We first attempted to try to incorporate it, but it wasn't working with our framework. There are also possibly other variables that could be provided to make our model better at classifying on predicting.
+To improve our Support Vector Machine Models, we could use tuning to set our parameter `cost`, `gamma` in the model. We could also try to incorporate the FineLineNumber into our model. We first attempted to try to incorporate it, but it wasn't working with our framework. There are also possibly other variables that could be provided to make our model better at classifying on predicting.
 
-This project further practice our R skills, helped with learning about classification algorithms, and furthured improved our knowledge of using the Shiny App. 
+This project further practice our R skills, helped with learning about classification algorithms, and furthured improved our knowledge of using the Shiny App. In addition, we learned more about kaggle.com, and all of the cool projects that are going on there.
 
 ## Reference
 [1] Support Vector Machine. (n.d.). In The elements of statistical learning: Data mining, inference, and prediction (Second ed.). (p. 417).
