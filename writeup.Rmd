@@ -61,7 +61,7 @@ Since in our original train/test set each row represents a product bought by som
 
 ##Classification and Prediction 
 
-To classify the visit number, we used SVM algorithm.
+To classify the trips and the visit numbers, we used SVM algorithm.
 
 ### Support Vector Machine Models
 
@@ -73,7 +73,9 @@ Third, we use our SVM models to predict the trip type in test set and upload our
 
 ## Inprovement and discussion
 
-To improve our Support Vector Machine Models, we could use tuning to set our parameter `cost`, `gamma` in SVM model. 
+To improve our Support Vector Machine Models, we could use tuning to set our parameter `cost`, `gamma` in SVM model. We could also try to incorporate the FineLineNumber into our model. We first attempted to try to incorporate it, but it wasn't working with our framework. There are also possibly other variables that could be provided to make our model better at classifying on predicting.
+
+This project further practice our R skills, helped with learning about classification algorithms, and furthured improved our knowledge of using the Shiny App. 
 
 ## Reference
 [1] Support Vector Machine. (n.d.). In The elements of statistical learning: Data mining, inference, and prediction (Second ed.). (p. 417).
